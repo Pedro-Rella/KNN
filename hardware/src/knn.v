@@ -1,6 +1,5 @@
 `timescale 1ns/1ps
 `include "iob_lib.vh"
-`include "sw_reg_w.vh"
 
 module knn_core
   #(
@@ -18,7 +17,7 @@ module knn_core
     );
    
    
-   `SIGNAL(d_aux, 2*KNN_WDATA_W)
+   `SIGNAL_SIGNED(d_aux, 2*KNN_WDATA_W)
    `SIGNAL_SIGNED(dx, KNN_WDATA_W)
    `SIGNAL_SIGNED(dy, KNN_WDATA_W)
    `COMB begin
