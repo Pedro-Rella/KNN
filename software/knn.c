@@ -4,6 +4,8 @@
 #include "iob_timer.h"
 #include "iob_knn.h"
 #include "random.h" //random generator for bare metal
+#include "KNNsw_reg.h"
+#include "interconnect.h"
 
 //uncomment to use rand from C lib 
 //#define cmwc_rand rand
@@ -45,13 +47,15 @@ struct neighbor {
 //Functions
 //
 
+static int base;
+
 //square distance between 2 points a and b
 unsigned int sq_dist( struct datum a, struct datum b) {
   short X = a.x-b.x;
-  unsigned int X2=X*X;
+  unsigned int X_2=X*X;
   short Y = a.y-b.y;
-  unsigned int Y2=Y*Y;
-  return (X2 + Y2);
+  unsigned int Y_2=Y*Y;
+  return (X_2 + Y_2);
 }
 
 //insert element in ordered array of neighbours
@@ -69,6 +73,8 @@ int main() {
 
   unsigned long long elapsed;
   unsigned int elapsedu;
+  uint64_t d=0;
+  unsigned int d_aux=0;
 
   //init uart and timer
   uart_init(UART_BASE, FREQ/BAUD);
@@ -76,6 +82,7 @@ int main() {
   uart_txwait();
 
   timer_init(TIMER_BASE);
+  knn_init(KNN_BASE);
   //read current timer count, compute elapsed time
   //elapsed  = timer_get_count();
   //elapsedu = timer_time_us();
@@ -141,8 +148,8 @@ int main() {
 #endif
     for (int i=0; i<N; i++) { //for all dataset points
       //compute distance to x[k]
-      unsigned int d = sq_dist(x[k], data[i]);
-
+      //unsigned int d = sq_dist(x[k], data[i]);
+	d = knn_d2(x[k].x, x[k].y, data[i].x, data[i].y);
       //insert in ordered list
       for (int j=0; j<K; j++)
         if ( d < neighbor[j].dist ) {
@@ -151,8 +158,9 @@ int main() {
         }
 
 #ifdef DEBUG
+	d_aux=d;
       //dataset
-      uart_printf("%d \t%d \t%d \t%d \t%d\n", i, data[i].x, data[i].y, data[i].label, d);
+      uart_printf("%d \t%d \t%d \t%d \t%d\n", i, data[i].x, data[i].y, data[i].label, d_aux);
 #endif
 
     }
@@ -201,7 +209,46 @@ int main() {
   for (int l=0; l<C; l++)
     uart_printf("%d ", votes_acc[l]);
   uart_printf("\n");
-  
 }
 
+void knn_reset(){	
+  IO_SET(base, KNN_RESET, 1);
+  IO_SET(base, KNN_RESET, 0);
+}
 
+void knn_start(){
+  IO_SET(base, KNN_ENABLE, 1);
+}
+
+void knn_stop(){
+  IO_SET(base, KNN_ENABLE, 0);
+}
+
+void knn_init(int base_address){
+  //capture base address for good
+  base = base_address;
+  knn_reset();
+}
+
+uint64_t knn_d2(int x1, int y1, int x2, int y2){
+  uint64_t d2;
+  uint32_t d2_high, d2_low;
+  knn_reset();
+  IO_SET(base, X1, 0);
+  IO_SET(base, Y1, 0);
+  IO_SET(base, X2, 0);
+  IO_SET(base, Y2, 0);
+  IO_SET(base, X1, x1);
+  IO_SET(base, Y1, y1);
+  IO_SET(base, X2, x2);
+  IO_SET(base, Y2, y2);
+  //knn_start();
+  d2_high = (uint32_t) IO_GET(base, D2_HIGH);
+  d2_low = (uint32_t) IO_GET(base, D2_LOW);
+  knn_stop();
+  d2 = d2_high;
+  d2 <<= 32;
+  d2 |= d2_low;
+  return d2;
+ }
+  
