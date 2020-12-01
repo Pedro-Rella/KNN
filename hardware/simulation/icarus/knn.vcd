@@ -1,0 +1,115 @@
+$date
+	Tue Nov 24 15:10:25 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module iob_knn $end
+$var wire 3 ! address [2:0] $end
+$var wire 1 " clk $end
+$var wire 32 # rdata [31:0] $end
+$var wire 1 $ ready $end
+$var wire 1 % rst $end
+$var wire 1 & valid $end
+$var wire 1 ' wdata $end
+$var wire 4 ( wstrb [3:0] $end
+$var reg 1 ) KNN_ENABLE $end
+$var reg 1 * KNN_RESET $end
+$var reg 32 + rdata_int [31:0] $end
+$var reg 1 , ready_int $end
+$var reg 1 - rst_int $end
+$var reg 1 . write $end
+$scope module knn0 $end
+$var wire 1 ) KNN_ENABLE $end
+$var wire 1 " clk $end
+$var wire 64 / d2 [63:0] $end
+$var wire 1 - rst $end
+$var wire 32 0 x1 [31:0] $end
+$var wire 32 1 x2 [31:0] $end
+$var wire 32 2 y1 [31:0] $end
+$var wire 32 3 y2 [31:0] $end
+$var reg 64 4 d_aux [63:0] $end
+$upscope $end
+$upscope $end
+$scope module knn_tb $end
+$var wire 64 5 D2 [63:0] $end
+$var reg 1 6 KNN_ENABLE $end
+$var reg 32 7 X1 [31:0] $end
+$var reg 32 8 X2 [31:0] $end
+$var reg 32 9 Y1 [31:0] $end
+$var reg 32 : Y2 [31:0] $end
+$var reg 1 ; clk $end
+$var reg 1 < rst $end
+$scope module knn0 $end
+$var wire 1 6 KNN_ENABLE $end
+$var wire 1 ; clk $end
+$var wire 64 = d2 [63:0] $end
+$var wire 1 < rst $end
+$var wire 32 > x1 [31:0] $end
+$var wire 32 ? x2 [31:0] $end
+$var wire 32 @ y1 [31:0] $end
+$var wire 32 A y2 [31:0] $end
+$var reg 64 B d_aux [63:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b100 B
+b0 A
+b0 @
+b100 ?
+b10 >
+b100 =
+0<
+1;
+b0 :
+b0 9
+b100 8
+b10 7
+06
+b100 5
+bx 4
+bz 3
+bz 2
+bz 1
+bz 0
+bx /
+x.
+x-
+x,
+b0 +
+x*
+x)
+bz (
+z'
+z&
+z%
+x$
+b0 #
+z"
+bz !
+$end
+#5000
+0;
+#7000
+1<
+#10000
+1;
+#15000
+0;
+#17000
+0<
+#20000
+1;
+#21000
+16
+#25000
+0;
+#30000
+1;
+#31000
+06
