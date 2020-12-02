@@ -18,10 +18,10 @@
 #define M 4   //number samples to be classified
 #else
 #define S 12   
-#define N 100000
-#define K 10  
+#define N 10
+#define K 4  
 #define C 4  
-#define M 100 
+#define M 4 
 #endif
 
 #define INFINITE ~0
@@ -73,14 +73,13 @@ int main() {
 
   unsigned long long elapsed;
   unsigned int elapsedu;
-  uint64_t d=0;
-  unsigned int d_aux=0;
 
   //init uart and timer
   uart_init(UART_BASE, FREQ/BAUD);
-  uart_printf("\nInit timer\n");
-  uart_txwait();
 
+  	uart_printf("\nInit timer\n");
+  	uart_txwait();
+  	
   timer_init(TIMER_BASE);
   knn_init(KNN_BASE);
   //read current timer count, compute elapsed time
@@ -109,7 +108,7 @@ int main() {
   uart_printf("\n\n\nDATASET\n");
   uart_printf("Idx \tX \tY \tLabel\n");
   for (int i=0; i<N; i++)
-    uart_printf("%d \t%d \t%d \t%d\n", i, data[i].x,  data[i].y, data[i].label);
+    	uart_printf("%d \t%d \t%d \t%d\n", i, data[i].x,  data[i].y, data[i].label);
 #endif
   
   //init test points
@@ -123,7 +122,7 @@ int main() {
   uart_printf("\n\nTEST POINTS\n");
   uart_printf("Idx \tX \tY\n");
   for (int k=0; k<M; k++)
-    uart_printf("%d \t%d \t%d\n", k, x[k].x, x[k].y);
+    	uart_printf("%d \t%d \t%d\n", k, x[k].x, x[k].y);
 #endif
   
   //
@@ -136,7 +135,7 @@ int main() {
   //compute distances to dataset points
 
 #ifdef DEBUG
-    uart_printf("\n\nProcessing x[%d]:\n", k);
+   uart_printf("\n\nProcessing x[%d]:\n", k);
 #endif
 
     //init all k neighbors infinite distance
@@ -149,7 +148,7 @@ int main() {
     for (int i=0; i<N; i++) { //for all dataset points
       //compute distance to x[k]
       //unsigned int d = sq_dist(x[k], data[i]);
-	d = knn_d2(x[k].x, x[k].y, data[i].x, data[i].y);
+      unsigned int d = knn_d2(x[k].x, x[k].y, data[i].x, data[i].y);
       //insert in ordered list
       for (int j=0; j<K; j++)
         if ( d < neighbor[j].dist ) {
@@ -158,9 +157,9 @@ int main() {
         }
 
 #ifdef DEBUG
-	d_aux=d;
+      d_aux=d;
       //dataset
-      uart_printf("%d \t%d \t%d \t%d \t%d\n", i, data[i].x, data[i].y, data[i].label, d_aux);
+      uart_printf("%d \t%d \t%d \t%d \t%d\n", i, data[i].x, data[i].y, data[i].label, d);
 #endif
 
     }
@@ -194,7 +193,6 @@ int main() {
     uart_printf("\n\nCLASSIFICATION of x[%d]:\n", k);
     uart_printf("X \tY \tLabel\n");
     uart_printf("%d \t%d \t%d\n\n\n", x[k].x, x[k].y, x[k].label);
-
 #endif
 
   } //all test points classified
@@ -243,12 +241,8 @@ uint64_t knn_d2(int x1, int y1, int x2, int y2){
   IO_SET(base, X2, x2);
   IO_SET(base, Y2, y2);
   //knn_start();
-  d2_high = (uint32_t) IO_GET(base, D2_HIGH);
-  d2_low = (uint32_t) IO_GET(base, D2_LOW);
+  d2 = (uint32_t) IO_GET(base, D2);
   knn_stop();
-  d2 = d2_high;
-  d2 <<= 32;
-  d2 |= d2_low;
   return d2;
  }
   

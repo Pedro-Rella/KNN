@@ -27,7 +27,7 @@ module iob_knn
    `COMB write = | wstrb;
 
 
-   `SIGNAL_OUT(D2, 2*WDATA_W)
+  // `SIGNAL_OUT(D2, 2*WDATA_W)
    //
    //BLOCK KNN
    //
@@ -51,10 +51,10 @@ module iob_knn
    `SIGNAL2OUT(ready, ready_int)
 
    //rdata signal
-   `COMB begin
-      D2_LOW = D2[WDATA_W-1:0];
-      D2_HIGH = D2[2*WDATA_W-1:WDATA_W];   
-   end
+  // `COMB begin
+  //    D2_LOW = D2[WDATA_W-1:0];
+  //    D2_HIGH = D2[2*WDATA_W-1:WDATA_W];   
+  // end
       
 endmodule
 

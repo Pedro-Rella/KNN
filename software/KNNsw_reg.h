@@ -7,5 +7,4 @@
 #define Y1 3
 #define X2 4
 #define Y2 5
-#define D2_HIGH 6
-#define D2_LOW 7
+#define D2 6
