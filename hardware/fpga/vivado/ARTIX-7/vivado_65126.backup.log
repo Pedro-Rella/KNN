@@ -1,0 +1,284 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:47:09 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Wed Dec  2 12:43:01 2020
+# Process ID: 65126
+# Current directory: /home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/fpga/vivado/ARTIX-7
+# Command line: vivado -nojournal -log vivado.log -mode batch -source ../knn.tcl -tclargs iob_knn ../../../../hardware/src/knn.v ../../../../hardware/src/iob_knn.v ../../../../hardware/include ../../../../submodules/LIB/hardware/include ../../../../submodules/INTERCON/hardware/include  DATA_W=32 xc7a35tcpg236-1
+# Log file: /home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/fpga/vivado/ARTIX-7/vivado.log
+# Journal file: 
+#-----------------------------------------------------------
+source ../knn.tcl
+# set TOP [lindex $argv 0]
+# set PART xc7a35tcpg236-1
+# set VSRC [lindex $argv 1]
+# set HW_INCLUDE [lindex $argv 2]
+# set HW_DEFINE [lindex $argv 3]
+# puts $VSRC
+../../../../hardware/src/knn.v ../../../../hardware/src/iob_knn.v
+# foreach file [split $VSRC \ ] {
+#     puts $file
+#     if {$file != "" && $file != " " && $file != "\n"} {
+#         read_verilog -sv $file
+#     }
+# }
+../../../../hardware/src/knn.v
+../../../../hardware/src/iob_knn.v
+# set_property part $PART [current_project]
+# synth_design -include_dirs $HW_INCLUDE -verilog_define $HW_DEFINE -part $PART -top $TOP -mode out_of_context -flatten_hierarchy none -verbose
+Command: synth_design -include_dirs {../../../../hardware/include ../../../../submodules/LIB/hardware/include ../../../../submodules/INTERCON/hardware/include} -verilog_define DATA_W=32 -part xc7a35tcpg236-1 -top iob_knn -mode out_of_context -flatten_hierarchy none -verbose
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 65132 
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1464.727 ; gain = 101.637 ; free physical = 9824 ; free virtual = 21274
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'iob_knn' [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/iob_knn.v:6]
+	Parameter ADDR_W bound to: 3 - type: integer 
+	Parameter DATA_W bound to: 32 - type: integer 
+	Parameter WDATA_W bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'knn_core' [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/knn.v:4]
+	Parameter KNN_WDATA_W bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'knn_core' (1#1) [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/knn.v:4]
+WARNING: [Synth 8-689] width (32) of port connection 'x1' does not match port width (16) of module 'knn_core' [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/iob_knn.v:39]
+WARNING: [Synth 8-689] width (32) of port connection 'y1' does not match port width (16) of module 'knn_core' [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/iob_knn.v:40]
+WARNING: [Synth 8-689] width (32) of port connection 'x2' does not match port width (16) of module 'knn_core' [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/iob_knn.v:41]
+WARNING: [Synth 8-689] width (32) of port connection 'y2' does not match port width (16) of module 'knn_core' [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/iob_knn.v:42]
+WARNING: [Synth 8-689] width (64) of port connection 'd2' does not match port width (32) of module 'knn_core' [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/iob_knn.v:43]
+INFO: [Synth 8-6155] done synthesizing module 'iob_knn' (2#1) [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/iob_knn.v:6]
+WARNING: [Synth 8-3331] design knn_core has unconnected port KNN_ENABLE[0]
+WARNING: [Synth 8-3331] design knn_core has unconnected port clk[0]
+WARNING: [Synth 8-3331] design knn_core has unconnected port rst[0]
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1518.477 ; gain = 155.387 ; free physical = 9833 ; free virtual = 21299
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1524.414 ; gain = 161.324 ; free physical = 9831 ; free virtual = 21298
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcpg236-1
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1532.418 ; gain = 169.328 ; free physical = 9829 ; free virtual = 21296
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 1541.324 ; gain = 178.234 ; free physical = 9818 ; free virtual = 21285
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     16 Bit       Adders := 2     
++---Registers : 
+	               32 Bit    Registers := 4     
+	                1 Bit    Registers := 3     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 2     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component detection 
+Module iob_knn 
+File: /home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/iob_knn.v 
+Found Register "ready_int_reg" of size 1-bit
+Found Register "KNN_ENABLE_reg" of size 1-bit
+Found Register "KNN_RESET_reg" of size 1-bit
+Found Register "X1_reg" of size 32-bit
+Found Register "Y1_reg" of size 32-bit
+Found Register "X2_reg" of size 32-bit
+Found Register "Y2_reg" of size 32-bit
+Module knn_core 
+File: /home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/src/knn.v 
+Found Adder "d22" of operand size {<const>, 16 Bit, 16 Bit} at Line:24
+Found Adder "d22" of operand size {<const>, 16 Bit, 16 Bit} at Line:25
+Hierarchical RTL Component report 
+Module iob_knn 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 4     
+	                1 Bit    Registers := 3     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 2     
+Module knn_core 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     16 Bit       Adders := 2     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+DSP Report: Generating DSP d21, operation Mode is: A*B.
+DSP Report: operator d21 is absorbed into DSP d21.
+DSP Report: Generating DSP d20, operation Mode is: PCIN+A*B.
+DSP Report: operator d20 is absorbed into DSP d20.
+DSP Report: operator d21 is absorbed into DSP d20.
+WARNING: [Synth 8-3331] design knn_core has unconnected port KNN_ENABLE[0]
+WARNING: [Synth 8-3331] design knn_core has unconnected port clk[0]
+WARNING: [Synth 8-3331] design knn_core has unconnected port rst[0]
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1643.730 ; gain = 280.641 ; free physical = 9633 ; free virtual = 21101
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping  Report (see note below)
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|knn_core    | A*B         | 16     | 16     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|knn_core    | PCIN+A*B    | 16     | 16     | -      | -      | 32     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 1643.730 ; gain = 280.641 ; free physical = 9641 ; free virtual = 21109
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:09 ; elapsed = 00:00:12 . Memory (MB): peak = 1643.730 ; gain = 280.641 ; free physical = 9641 ; free virtual = 21109
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1643.730 ; gain = 280.641 ; free physical = 9640 ; free virtual = 21107
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1643.730 ; gain = 280.641 ; free physical = 9640 ; free virtual = 21107
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1643.730 ; gain = 280.641 ; free physical = 9640 ; free virtual = 21107
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |CARRY4  |     8|
+|2     |DSP48E1 |     2|
+|3     |LUT2    |    32|
+|4     |LUT4    |    32|
+|5     |LUT5    |     4|
+|6     |FDCE    |    65|
++------+--------+------+
+
+Report Instance Areas: 
++------+---------+---------+------+
+|      |Instance |Module   |Cells |
++------+---------+---------+------+
+|1     |top      |         |   143|
+|2     |  knn0   |knn_core |    42|
++------+---------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1643.730 ; gain = 280.641 ; free physical = 9639 ; free virtual = 21107
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 11 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1643.730 ; gain = 280.641 ; free physical = 9641 ; free virtual = 21109
+Synthesis Optimization Complete : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1643.738 ; gain = 280.641 ; free physical = 9641 ; free virtual = 21109
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 10 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1734.262 ; gain = 0.000 ; free physical = 9559 ; free virtual = 21027
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+13 Infos, 11 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1734.262 ; gain = 371.254 ; free physical = 9659 ; free virtual = 21126
+# read_xdc ../knn.xdc
+ERROR: [Common 17-275] File does not exist [/home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/fpga/vivado/knn.xdc]
+INFO: [Common 17-206] Exiting Vivado at Wed Dec  2 12:43:26 2020...

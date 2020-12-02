@@ -1,0 +1,30 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:47:09 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Wed Dec  2 12:41:00 2020
+# Process ID: 65046
+# Current directory: /home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/fpga/vivado/ARTIX-7
+# Command line: vivado -nojournal -log vivado.log -mode batch -source ../knn.tcl -tclargs iob_knn ../../../../hardware/src/knn.v ../../../../hardware/src/iob_knn.v ../../../../hardware/include ../../../../submodules/LIB/hardware/include ../../../../submodules/INTERCON/hardware/include  DATA_W=32 xc7a35tcpg236-1
+# Log file: /home/filipe/Desktop/ecomp lab parte 2/alteracoes/iob-soc-lab/submodules/KNN/hardware/fpga/vivado/ARTIX-7/vivado.log
+# Journal file: 
+#-----------------------------------------------------------
+source ../knn.tcl
+# set TOP [lindex $argv 0]
+# set PART xcku040-fbva676-1-c
+# set VSRC [lindex $argv 1]
+# set HW_INCLUDE [lindex $argv 2]
+# set HW_DEFINE [lindex $argv 3]
+# puts $VSRC
+../../../../hardware/src/knn.v ../../../../hardware/src/iob_knn.v
+# foreach file [split $VSRC \ ] {
+#     puts $file
+#     if {$file != "" && $file != " " && $file != "\n"} {
+#         read_verilog -sv $file
+#     }
+# }
+../../../../hardware/src/knn.v
+../../../../hardware/src/iob_knn.v
+# set_property part $PART [current_project]
+ERROR: [Common 17-69] Command failed: Part 'xcku040-fbva676-1-c' not found
+INFO: [Common 17-206] Exiting Vivado at Wed Dec  2 12:41:11 2020...
