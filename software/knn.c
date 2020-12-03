@@ -157,7 +157,7 @@ int main() {
         }
 
 #ifdef DEBUG
-      d_aux=d;
+      // d_aux=d;
       //dataset
       uart_printf("%d \t%d \t%d \t%d \t%d\n", i, data[i].x, data[i].y, data[i].label, d);
 #endif
