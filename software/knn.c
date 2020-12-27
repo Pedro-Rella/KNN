@@ -18,10 +18,10 @@
 #define M 4   //number samples to be classified
 #else
 #define S 12   
-#define N 10
-#define K 4  
+#define N 100
+#define K 10  
 #define C 4  
-#define M 4 
+#define M 10
 #endif
 
 #define INFINITE ~0
@@ -77,10 +77,9 @@ int main() {
   //init uart and timer
   uart_init(UART_BASE, FREQ/BAUD);
 
-  	uart_printf("\nInit timer\n");
+  	uart_printf("\nInit timer without acc\n");
   	uart_txwait();
   	
-  timer_init(TIMER_BASE);
   knn_init(KNN_BASE);
   //read current timer count, compute elapsed time
   //elapsed  = timer_get_count();
@@ -126,10 +125,10 @@ int main() {
 #endif
   
   //
-  // PROCESS DATA
+  // PROCESS DATA WITHOUT ACC
   //
 
-  //start knn here
+  timer_init(TIMER_BASE);
   
   for (int k=0; k<M; k++) { //for all test points
   //compute distances to dataset points
@@ -147,7 +146,93 @@ int main() {
 #endif
     for (int i=0; i<N; i++) { //for all dataset points
       //compute distance to x[k]
-      //unsigned int d = sq_dist(x[k], data[i]);
+      unsigned int d = sq_dist(x[k], data[i]);
+      //insert in ordered list
+      for (int j=0; j<K; j++)
+        if ( d < neighbor[j].dist ) {
+          insert( (struct neighbor){i,d}, j);
+          break;
+        }
+
+#ifdef DEBUG
+      //dataset
+      uart_printf("%d \t%d \t%d \t%d \t%d\n", i, data[i].x, data[i].y, data[i].label, d);
+#endif
+
+    }
+
+    //classify test point
+
+    //clear all votes
+    int votes[C] = {0};
+    int best_votation = 0;
+    int best_voted = 0;
+
+    //make neighbours vote
+    for (int j=0; j<K; j++) { //for all neighbors
+      if ( (++votes[data[neighbor[j].idx].label]) > best_votation ) {
+        best_voted = data[neighbor[j].idx].label;
+        best_votation = votes[best_voted];
+      }
+    }
+
+    x[k].label = best_voted;
+
+    votes_acc[best_voted]++;
+    
+#ifdef DEBUG
+    uart_printf("\n\nNEIGHBORS of x[%d]=(%d, %d):\n", k, x[k].x, x[k].y);
+    uart_printf("K \tIdx \tX \tY \tDist \t\tLabel\n");
+    for (int j=0; j<K; j++)
+      uart_printf("%d \t%d \t%d \t%d \t%d \t%d\n", j+1, neighbor[j].idx, data[neighbor[j].idx].x,  data[neighbor[j].idx].y, neighbor[j].dist,  data[neighbor[j].idx].label);
+    
+    uart_printf("\n\nCLASSIFICATION of x[%d]:\n", k);
+    uart_printf("X \tY \tLabel\n");
+    uart_printf("%d \t%d \t%d\n\n\n", x[k].x, x[k].y, x[k].label);
+#endif
+
+  } //all test points classified
+
+  //stop knn here
+  //read current timer count, compute elapsed time
+  elapsedu = timer_time_us(TIMER_BASE);
+  uart_printf("\nExecution time: %dus @%dMHz\n\n", elapsedu, FREQ/1000000);
+
+  
+  //print classification distribution to check for statistical bias
+  for (int l=0; l<C; l++)
+    uart_printf("%d ", votes_acc[l]);
+  uart_printf("\n");
+  
+  //
+  // PROCESS DATA WITH ACC
+  //
+  
+  
+  for(int l=0;l<C;l++)
+    votes_acc[l] = 0;
+
+  uart_printf("\nInit timer with acc\n");
+  uart_txwait();
+  	
+  timer_init(TIMER_BASE);
+  
+    for (int k=0; k<M; k++) { //for all test points
+  //compute distances to dataset points
+
+#ifdef DEBUG
+   uart_printf("\n\nProcessing x[%d]:\n", k);
+#endif
+
+    //init all k neighbors infinite distance
+    for (int j=0; j<K; j++)
+      neighbor[j].dist = INFINITE;
+
+#ifdef DEBUG
+    uart_printf("Datum \tX \tY \tLabel \tDistance\n");
+#endif
+    for (int i=0; i<N; i++) { //for all dataset points
+      //compute distance to x[k]
       unsigned int d = knn_d2(x[k].x, x[k].y, data[i].x, data[i].y);
       //insert in ordered list
       for (int j=0; j<K; j++)
@@ -157,7 +242,6 @@ int main() {
         }
 
 #ifdef DEBUG
-      d_aux=d;
       //dataset
       uart_printf("%d \t%d \t%d \t%d \t%d\n", i, data[i].x, data[i].y, data[i].label, d);
 #endif
@@ -228,19 +312,12 @@ void knn_init(int base_address){
   knn_reset();
 }
 
-uint64_t knn_d2(int x1, int y1, int x2, int y2){
-  uint64_t d2;
-  uint32_t d2_high, d2_low;
-  knn_reset();
-  IO_SET(base, X1, 0);
-  IO_SET(base, Y1, 0);
-  IO_SET(base, X2, 0);
-  IO_SET(base, Y2, 0);
+uint32_t knn_d2(short x1, short y1, short x2, short y2){
+  uint32_t d2;
   IO_SET(base, X1, x1);
   IO_SET(base, Y1, y1);
   IO_SET(base, X2, x2);
   IO_SET(base, Y2, y2);
-  //knn_start();
   d2 = (uint32_t) IO_GET(base, D2);
   knn_stop();
   return d2;

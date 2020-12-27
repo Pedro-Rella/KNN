@@ -7,4 +7,4 @@ void knn_reset();
 void knn_start();
 void knn_stop();
 void knn_init(int base_address);
-uint64_t knn_d2(int x1, int y1, int x2, int y2);
+uint32_t knn_d2(short x1, short y1, short x2, short y2);
