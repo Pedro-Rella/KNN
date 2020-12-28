@@ -242,6 +242,10 @@ int main() {
         }
 
 #ifdef DEBUG
+<<<<<<< HEAD
+=======
+      // d_aux=d;
+>>>>>>> a22fbd0cd10d8fdf23a39cf52c3e6e5df0e959d4
       //dataset
       uart_printf("%d \t%d \t%d \t%d \t%d\n", i, data[i].x, data[i].y, data[i].label, d);
 #endif
