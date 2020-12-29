@@ -2,7 +2,6 @@
 #include "periphs.h"
 #include <iob-uart.h>
 #include "iob_timer.h"
-#include "iob_knn.h"
 #include "random.h" //random generator for bare metal
 #include "KNNsw_reg.h"
 #include "interconnect.h"
@@ -26,16 +25,11 @@
 
 #define INFINITE ~0
 
+#include "iob_knn.h"
+
 //
 //Data structures
 //
-
-//labeled dataset
-struct datum {
-  short x;
-  short y;
-  unsigned char label;
-} data[N], x[M];
 
 //neighbor info
 struct neighbor {
@@ -88,6 +82,7 @@ int main() {
 
   //int vote accumulator
   int votes_acc[C] = {0};
+  int votes_Wacc[C] = {0};
 
   //generate random seed 
   random_init(S);
@@ -100,7 +95,7 @@ int main() {
     data[i].y = (short) cmwc_rand();
 
     //init label
-    data[i].label = (unsigned char) (cmwc_rand()%C);
+    data[i].label = (short) (cmwc_rand()%C);
   }
 
 #ifdef DEBUG
@@ -208,81 +203,60 @@ int main() {
   // PROCESS DATA WITH ACC
   //
   
-  
-  for(int l=0;l<C;l++)
-    votes_acc[l] = 0;
-
   uart_printf("\nInit timer with acc\n");
   uart_txwait();
   	
   timer_init(TIMER_BASE);
   
     for (int k=0; k<M; k++) { //for all test points
-  //compute distances to dataset points
 
 #ifdef DEBUG
    uart_printf("\n\nProcessing x[%d]:\n", k);
 #endif
 
-    //init all k neighbors infinite distance
-    for (int j=0; j<K; j++)
-      neighbor[j].dist = INFINITE;
 
 #ifdef DEBUG
     uart_printf("Datum \tX \tY \tLabel \tDistance\n");
 #endif
-    for (int i=0; i<N; i++) { //for all dataset points
-      //compute distance to x[k]
-      unsigned int d = knn_d2(x[k].x, x[k].y, data[i].x, data[i].y);
-      //insert in ordered list
-      for (int j=0; j<K; j++)
-        if ( d < neighbor[j].dist ) {
-          insert( (struct neighbor){i,d}, j);
-          break;
-        }
 
+      //compute label to x[k]
+      x[k].label = knn(x[k].x, x[k].y, data);
 #ifdef DEBUG
-<<<<<<< HEAD
-=======
-      // d_aux=d;
->>>>>>> a22fbd0cd10d8fdf23a39cf52c3e6e5df0e959d4
-      //dataset
-      uart_printf("%d \t%d \t%d \t%d \t%d\n", i, data[i].x, data[i].y, data[i].label, d);
-#endif
-
-    }
-
-    
-    //classify test point
-
-    //clear all votes
-    int votes[C] = {0};
-    int best_votation = 0;
-    int best_voted = 0;
-
-    //make neighbours vote
-    for (int j=0; j<K; j++) { //for all neighbors
-      if ( (++votes[data[neighbor[j].idx].label]) > best_votation ) {
-        best_voted = data[neighbor[j].idx].label;
-        best_votation = votes[best_voted];
-      }
-    }
-
-    x[k].label = best_voted;
-
-    votes_acc[best_voted]++;
-    
-#ifdef DEBUG
-    uart_printf("\n\nNEIGHBORS of x[%d]=(%d, %d):\n", k, x[k].x, x[k].y);
-    uart_printf("K \tIdx \tX \tY \tDist \t\tLabel\n");
-    for (int j=0; j<K; j++)
-      uart_printf("%d \t%d \t%d \t%d \t%d \t%d\n", j+1, neighbor[j].idx, data[neighbor[j].idx].x,  data[neighbor[j].idx].y, neighbor[j].dist,  data[neighbor[j].idx].label);
-    
     uart_printf("\n\nCLASSIFICATION of x[%d]:\n", k);
     uart_printf("X \tY \tLabel\n");
     uart_printf("%d \t%d \t%d\n\n\n", x[k].x, x[k].y, x[k].label);
 #endif
 
+    if(x[k].label == 0){
+    	votes_Wacc[0]++;
+    }
+    else if(x[k].label==1){
+    	votes_Wacc[1]++;
+    }
+    else if(x[k].label==2){
+    	votes_Wacc[2]++;
+    }
+    else if(x[k].label==3){
+    	votes_Wacc[3]++;
+    }
+    else if(x[k].label==4){
+    	votes_Wacc[4]++;
+    }
+    else if(x[k].label==5){
+    	votes_Wacc[5]++;
+    }
+    else if(x[k].label==6){
+    	votes_Wacc[6]++;
+    }
+    else if(x[k].label==7){
+    	votes_Wacc[7]++;
+    }
+    else if(x[k].label==8){
+    	votes_Wacc[8]++;
+    }
+    else if(x[k].label==9){
+    	votes_Wacc[9]++;
+    }
   } //all test points classified
 
   //stop knn here
@@ -293,13 +267,15 @@ int main() {
   
   //print classification distribution to check for statistical bias
   for (int l=0; l<C; l++)
-    uart_printf("%d ", votes_acc[l]);
+    uart_printf("%d ", votes_Wacc[l]);
   uart_printf("\n");
 }
 
 void knn_reset(){	
   IO_SET(base, KNN_RESET, 1);
   IO_SET(base, KNN_RESET, 0);
+  IO_SET(base, D_READY, 0);
+  IO_SET(base, CLASSIFY,0);
 }
 
 void knn_start(){
@@ -316,14 +292,27 @@ void knn_init(int base_address){
   knn_reset();
 }
 
-uint32_t knn_d2(short x1, short y1, short x2, short y2){
-  uint32_t d2;
-  IO_SET(base, X1, x1);
-  IO_SET(base, Y1, y1);
-  IO_SET(base, X2, x2);
-  IO_SET(base, Y2, y2);
-  d2 = (uint32_t) IO_GET(base, D2);
-  knn_stop();
-  return d2;
+short knn(short x, short y, struct datum *data){
+  int d=-1;
+  knn_reset();
+  IO_SET(base, XX, x);
+  IO_SET(base, YY, y);
+  IO_SET(base, NLABELS, C);
+  for (int i=0; i<N; i++) { //for all dataset points  
+      IO_SET(base, DATA_X, data[i].x);
+      IO_SET(base, DATA_Y, data[i].y);
+      IO_SET(base, DATA_LABEL, data[i].label);
+      IO_SET(base, D_READY, 1);
+      IO_SET(base, D_READY, 0);
+      d = IO_GET(base, DISTANCE);
+      uart_printf("distance %d\n", d);
+      uart_txwait();
+}
+  IO_SET(base, CLASSIFY, 1);
+  IO_SET(base, CLASSIFY, 0);
+  uart_printf("label %d\n", IO_GET(base, XLABEL));
+  return IO_GET(base, XLABEL);
+
+
  }
   

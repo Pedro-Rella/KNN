@@ -27,7 +27,7 @@ module iob_knn
    `COMB write = | wstrb;
 
 
-  // `SIGNAL_OUT(D2, 2*WDATA_W)
+  // `SIGNAL(done, 1)
    //
    //BLOCK KNN
    //
@@ -37,11 +37,17 @@ module iob_knn
       .KNN_ENABLE(KNN_ENABLE),
       .clk(clk),
       .rst(KNN_RESET),
-      .x1(X1),
-      .y1(Y1),
-      .x2(X2),
-      .y2(Y2),
-      .d2(D2)
+      .x(XX),
+      .y(YY),
+      .data_x(DATA_X),
+      .data_y(DATA_Y),
+      .data_label(DATA_LABEL),
+      .Nlabels(NLABELS),
+      .classify(CLASSIFY),
+      .d_ready(D_READY),
+      .Xlabel(XLABEL),
+      .distance(DISTANCE)
+     // .DONE(done)
       );   
    
    
