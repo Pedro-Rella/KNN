@@ -10,16 +10,16 @@
 //#define cmwc_rand rand
 
 #ifdef DEBUG //type make DEBUG=1 to print debug info
-#define S 12  //random seed
+#define S 5  //random seed
 #define N 10  //data set size
 #define K 4   //number of neighbours (K)
 #define C 4   //number data classes
 #define M 4   //number samples to be classified
 #else
-#define S 12   
+#define S 5   
 #define N 100
 #define K 10  
-#define C 4  
+#define C 10  
 #define M 10
 #endif
 
@@ -69,11 +69,7 @@ int main() {
   unsigned int elapsedu;
 
   //init uart and timer
-  uart_init(UART_BASE, FREQ/BAUD);
-
-  	uart_printf("\nInit timer without acc\n");
-  	uart_txwait();
-  	
+  uart_init(UART_BASE, FREQ/BAUD);	
   knn_init(KNN_BASE);
   //read current timer count, compute elapsed time
   //elapsed  = timer_get_count();
@@ -118,11 +114,12 @@ int main() {
   for (int k=0; k<M; k++)
     	uart_printf("%d \t%d \t%d\n", k, x[k].x, x[k].y);
 #endif
-  
   //
   // PROCESS DATA WITHOUT ACC
   //
-
+	
+  uart_printf("\nInit timer without acc\n");
+  uart_txwait();
   timer_init(TIMER_BASE);
   
   for (int k=0; k<M; k++) { //for all test points
@@ -214,13 +211,9 @@ int main() {
    uart_printf("\n\nProcessing x[%d]:\n", k);
 #endif
 
-
-#ifdef DEBUG
-    uart_printf("Datum \tX \tY \tLabel \tDistance\n");
-#endif
-
       //compute label to x[k]
       x[k].label = knn(x[k].x, x[k].y, data);
+      
 #ifdef DEBUG
     uart_printf("\n\nCLASSIFICATION of x[%d]:\n", k);
     uart_printf("X \tY \tLabel\n");
@@ -272,18 +265,9 @@ int main() {
 }
 
 void knn_reset(){	
-  IO_SET(base, KNN_RESET, 1);
-  IO_SET(base, KNN_RESET, 0);
-  IO_SET(base, D_READY, 0);
-  IO_SET(base, CLASSIFY,0);
-}
-
-void knn_start(){
-  IO_SET(base, KNN_ENABLE, 1);
-}
-
-void knn_stop(){
-  IO_SET(base, KNN_ENABLE, 0);
+  IO_SET(base, CONTROL, 1);
+  IO_SET(base, CONTROL, 0);
+  IO_SET(base, NK, K);
 }
 
 void knn_init(int base_address){
@@ -293,26 +277,19 @@ void knn_init(int base_address){
 }
 
 short knn(short x, short y, struct datum *data){
-  int d=-1;
   knn_reset();
   IO_SET(base, XX, x);
   IO_SET(base, YY, y);
-  IO_SET(base, NLABELS, C);
   for (int i=0; i<N; i++) { //for all dataset points  
       IO_SET(base, DATA_X, data[i].x);
       IO_SET(base, DATA_Y, data[i].y);
       IO_SET(base, DATA_LABEL, data[i].label);
-      IO_SET(base, D_READY, 1);
-      IO_SET(base, D_READY, 0);
-      d = IO_GET(base, DISTANCE);
-      uart_printf("distance %d\n", d);
-      uart_txwait();
+      IO_SET(base, CONTROL, 2);
+      IO_SET(base, CONTROL, 0);
 }
-  IO_SET(base, CLASSIFY, 1);
-  IO_SET(base, CLASSIFY, 0);
-  uart_printf("label %d\n", IO_GET(base, XLABEL));
+  IO_SET(base, CONTROL, 4);
+  IO_SET(base, CONTROL, 0);
   return IO_GET(base, XLABEL);
-
 
  }
   

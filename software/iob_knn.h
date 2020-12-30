@@ -11,7 +11,5 @@ struct datum {
 
 //Functions
 void knn_reset();
-void knn_start();
-void knn_stop();
 void knn_init(int base_address);
 short knn(short x, short y, struct datum*);

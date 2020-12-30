@@ -26,15 +26,16 @@ module iob_knn
    `SIGNAL(write, 1) 
    `COMB write = | wstrb;
 
+   `SIGNAL(CONTROL_BITS, 3)
+   `SIGNAL(KNN_RESET, 1)
 
-  // `SIGNAL(done, 1)
    //
    //BLOCK KNN
    //
    
    knn_core knn0
      (
-      .KNN_ENABLE(KNN_ENABLE),
+      .nk(NK),
       .clk(clk),
       .rst(KNN_RESET),
       .x(XX),
@@ -42,14 +43,9 @@ module iob_knn
       .data_x(DATA_X),
       .data_y(DATA_Y),
       .data_label(DATA_LABEL),
-      .Nlabels(NLABELS),
-      .classify(CLASSIFY),
-      .d_ready(D_READY),
-      .Xlabel(XLABEL),
-      .distance(DISTANCE)
-     // .DONE(done)
+      .control(CONTROL_BITS),
+      .Xlabel(XLABEL)
       );   
-   
    
    //ready signal   
    `SIGNAL(ready_int, 1)
@@ -57,14 +53,10 @@ module iob_knn
 
    `SIGNAL2OUT(ready, ready_int)
 
-
-   //rdata signal
-   //`COMB begin
-    //  X1 = Y1X1[WDATA_W-1:0];
-    //  Y1 = Y1X1[2*WDATA_W-1:WDATA_W]; 
-    //  X2 = Y2X2[WDATA_W-1:0];
-    //  Y2 = Y2X2[2*WDATA_W-1:WDATA_W];    
-   //end
+   `COMB begin
+      CONTROL_BITS = CONTROL[3:1];
+      KNN_RESET = CONTROL[0:0];  
+   end
       
 endmodule
 
