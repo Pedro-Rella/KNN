@@ -109,9 +109,33 @@ module knn_core
     `SIGNAL(N_label6,32)
     `SIGNAL(N_label7,32)
     `SIGNAL(N_label8,32)
-    `SIGNAL(N_label9,32)
+    `SIGNAL(N_label9,32)  
+    
+    `SIGNAL(N_label0_aux,32)
+    `SIGNAL(N_label1_aux,32)
+    `SIGNAL(N_label2_aux,32)
+    `SIGNAL(N_label3_aux,32)
+    `SIGNAL(N_label4_aux,32)
+    `SIGNAL(N_label5_aux,32)
+    `SIGNAL(N_label6_aux,32)
+    `SIGNAL(N_label7_aux,32)
+    `SIGNAL(N_label8_aux,32)
+    `SIGNAL(N_label9_aux,32)
+    `SIGNAL_SIGNED(labelOUTaux_aux, 8)  
     
     `SIGNAL_SIGNED(labelOUTaux, 8)
+    
+     `REG_ARE(clk,rst, 1'b0, 0, N_label0, N_label0_aux)
+     `REG_ARE(clk,rst, 1'b0, 0, N_label1, N_label1_aux)
+     `REG_ARE(clk,rst, 1'b0, 0, N_label2, N_label2_aux)
+     `REG_ARE(clk,rst, 1'b0, 0, N_label3, N_label3_aux)
+     `REG_ARE(clk,rst, 1'b0, 0, N_label4, N_label4_aux)
+     `REG_ARE(clk,rst, 1'b0, 0, N_label5, N_label5_aux)
+     `REG_ARE(clk,rst, 1'b0, 0, N_label6, N_label6_aux)
+     `REG_ARE(clk,rst, 1'b0, 0, N_label7, N_label7_aux)
+     `REG_ARE(clk,rst, 1'b0, 0, N_label8, N_label8_aux)
+     `REG_ARE(clk,rst, 1'b0, 0, N_label9, N_label9_aux)
+     `REG_ARE(clk,rst, 4'b1111, 0, labelOUTaux, labelOUTaux_aux)
     
     
     always @ (posedge rst)
@@ -127,16 +151,6 @@ module knn_core
           en8=0;
           en9=0;
           en10=0;
-          N_label0<=0;
-          N_label1<=0;
-          N_label2<=0;
-          N_label3<=0;
-          N_label4<=0;
-          N_label5<=0;
-          N_label6<=0;
-          N_label7<=0;
-          N_label8<=0;
-          N_label9<=0;
           Plabel0=0;
           Plabel1=1;
           Plabel2=2;
@@ -147,20 +161,6 @@ module knn_core
           Plabel7=7;
           Plabel8=8;
           Plabel9=9;
-          labelOUTaux<=-1;
-    	end
-    	else begin
-    	  N_label0<=N_label0;
-          N_label1<=N_label1;
-          N_label2<=N_label2;
-          N_label3<=N_label3;
-          N_label4<=N_label4;
-          N_label5<=N_label5;
-          N_label6<=N_label6;
-          N_label7<=N_label7;
-          N_label8<=N_label8;
-          N_label9<=N_label9;
-          labelOUTaux<=labelOUTaux;
     	end
     end
     
@@ -1039,7 +1039,7 @@ module knn_core
     	   end
     	   else if(label10 == 9 & nk > 9 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
-    	   	label10 = 8'b11111111;   	   
+    	   	label10 = 8'b11111111;
     	   end
     	   
     	   //compares N_labels to find point label no loops
