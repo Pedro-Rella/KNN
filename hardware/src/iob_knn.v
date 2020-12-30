@@ -18,6 +18,9 @@ module iob_knn
 `include "KNNsw_reg.v"
 `include "KNNsw_reg_gen.v"
 
+    `SIGNAL(KNN_RESET, 1)
+    `SIGNAL(CONTROL_BITS, 3)
+
     //combined hard/soft reset 
    `SIGNAL(rst_int, 1)
    `COMB rst_int = rst | KNN_RESET;
@@ -25,9 +28,6 @@ module iob_knn
    //write signal
    `SIGNAL(write, 1) 
    `COMB write = | wstrb;
-
-   `SIGNAL(CONTROL_BITS, 3)
-   `SIGNAL(KNN_RESET, 1)
 
    //
    //BLOCK KNN

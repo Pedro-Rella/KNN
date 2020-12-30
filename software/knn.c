@@ -114,6 +114,7 @@ int main() {
   for (int k=0; k<M; k++)
     	uart_printf("%d \t%d \t%d\n", k, x[k].x, x[k].y);
 #endif
+/*
   //
   // PROCESS DATA WITHOUT ACC
   //
@@ -195,7 +196,7 @@ int main() {
   for (int l=0; l<C; l++)
     uart_printf("%d ", votes_acc[l]);
   uart_printf("\n");
-  
+  */
   //
   // PROCESS DATA WITH ACC
   //

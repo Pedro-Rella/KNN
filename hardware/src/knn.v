@@ -100,10 +100,21 @@ module knn_core
     `SIGNAL(en9, 1)
     `SIGNAL(en10, 1)
     
+    `SIGNAL(N_label0,32)
+    `SIGNAL(N_label1,32)
+    `SIGNAL(N_label2,32)
+    `SIGNAL(N_label3,32)
+    `SIGNAL(N_label4,32)
+    `SIGNAL(N_label5,32)
+    `SIGNAL(N_label6,32)
+    `SIGNAL(N_label7,32)
+    `SIGNAL(N_label8,32)
+    `SIGNAL(N_label9,32)
+    
     `SIGNAL_SIGNED(labelOUTaux, 8)
     
     
-    always @ (rst)
+    always @ (posedge rst)
     begin
     	if(rst) begin
           en1=0;
@@ -618,209 +629,198 @@ module knn_core
     end
     
     //classify
-    `SIGNAL(N_label0,32)
-    `SIGNAL(N_label1,32)
-    `SIGNAL(N_label2,32)
-    `SIGNAL(N_label3,32)
-    `SIGNAL(N_label4,32)
-    `SIGNAL(N_label5,32)
-    `SIGNAL(N_label6,32)
-    `SIGNAL(N_label7,32)
-    `SIGNAL(N_label8,32)
-    `SIGNAL(N_label9,32)
-    
     always @* begin
     	if(control == 2) begin
     	   //increments the label of 1min without loops
-    	   if(label1 == 0 & nk > 0) begin
+    	   if(label1 == 0 & nk > 0 & rst == 0) begin
     	   	N_label0 = N_label0 + 1;
     	   	label1 = 8'b11111111;
     	   end
-    	   else if(label1 == 1 & nk > 0) begin
+    	   else if(label1 == 1 & nk > 0 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label1 = 8'b11111111;   	   
     	   end
-    	   else if(label1 == 2 & nk > 0) begin
+    	   else if(label1 == 2 & nk > 0 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label1 = 8'b11111111;  	   
     	   end
-    	   else if(label1 == 3 & nk > 0) begin
+    	   else if(label1 == 3 & nk > 0 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label1 = 8'b11111111;	   
     	   end
-    	   else if(label1 == 4 & nk > 0) begin
+    	   else if(label1 == 4 & nk > 0 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label1 = 8'b11111111; 	   
     	   end
-    	   else if(label1 == 5 & nk > 0) begin
+    	   else if(label1 == 5 & nk > 0 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label1 = 8'b11111111;   
     	   end
-    	   else if(label1 == 6 & nk > 0) begin
+    	   else if(label1 == 6 & nk > 0 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label1 = 8'b11111111; 	   
     	   end
-    	   else if(label1 == 7 & nk > 0) begin
+    	   else if(label1 == 7 & nk > 0 & rst == 0) begin
     	   	N_label7 = N_label7 + 1;  
     	   	label1 = 8'b11111111;  	   
     	   end
-    	   else if(label1 == 8 & nk > 0) begin
+    	   else if(label1 == 8 & nk > 0 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label1 = 8'b11111111;  	   
     	   end
-    	   else if(label1 == 9 & nk > 0) begin
+    	   else if(label1 == 9 & nk > 0 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label1 = 8'b11111111;   	   
     	   end
     	   //increments the label of 2min without loops
-     	   if(label2 == 0 & nk > 1) begin
+     	   if(label2 == 0 & nk > 1 & rst == 0) begin
     	   	N_label0 = N_label0 + 1;
     	   	label2 = 8'b11111111;
     	   end
-    	   else if(label2 == 1 & nk > 1) begin
+    	   else if(label2 == 1 & nk > 1 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label2 = 8'b11111111;   	   
     	   end
-    	   else if(label2 == 2 & nk > 1) begin
+    	   else if(label2 == 2 & nk > 1 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label2 = 8'b11111111;  	   
     	   end
-    	   else if(label2 == 3 & nk > 1) begin
+    	   else if(label2 == 3 & nk > 1 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label2 = 8'b11111111;	   
     	   end
-    	   else if(label2 == 4 & nk > 1) begin
+    	   else if(label2 == 4 & nk > 1 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label2 = 8'b11111111; 	   
     	   end
-    	   else if(label2 == 5 & nk > 1) begin
+    	   else if(label2 == 5 & nk > 1 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label2 = 8'b11111111;   
     	   end
-    	   else if(label2 == 6 & nk > 1) begin
+    	   else if(label2 == 6 & nk > 1 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label2 = 8'b11111111; 	   
     	   end
-    	   else if(label2 == 7 & nk > 1) begin
+    	   else if(label2 == 7 & nk > 1 & rst == 0) begin
     	   	N_label7 = N_label7 + 1;  
     	   	label2 = 8'b11111111;  	   
     	   end
-    	   else if(label2 == 8 & nk > 1) begin
+    	   else if(label2 == 8 & nk > 1 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label2 = 8'b11111111;  	   
     	   end
-    	   else if(label2 == 9 & nk > 1) begin
+    	   else if(label2 == 9 & nk > 1 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label2 = 8'b11111111;   	   
     	   end
     	   //increments the label of 3min without loops
-     	   if(label3 == 0 & nk > 2) begin
+     	   if(label3 == 0 & nk > 2 & rst == 0) begin
     	   	N_label0 = N_label0 + 1;
     	   	label3 = 8'b11111111;
     	   end
-    	   else if(label3 == 1 & nk > 2) begin
+    	   else if(label3 == 1 & nk > 2 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label3 = 8'b11111111;   	   
     	   end
-    	   else if(label3 == 2 & nk > 2) begin
+    	   else if(label3 == 2 & nk > 2 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label3 = 8'b11111111;  	   
     	   end
-    	   else if(label3 == 3 & nk > 2) begin
+    	   else if(label3 == 3 & nk > 2 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label3 = 8'b11111111;	   
     	   end
-    	   else if(label3 == 4 & nk > 2) begin
+    	   else if(label3 == 4 & nk > 2 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label3 = 8'b11111111; 	   
     	   end
-    	   else if(label3 == 5 & nk > 2) begin
+    	   else if(label3 == 5 & nk > 2 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label3 = 8'b11111111;   
     	   end
-    	   else if(label3 == 6 & nk > 2) begin
+    	   else if(label3 == 6 & nk > 2 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label3 = 8'b11111111; 	   
     	   end
-    	   else if(label3 == 7 & nk > 2) begin
+    	   else if(label3 == 7 & nk > 2 & rst == 0) begin
     	   	N_label7 = N_label7 + 1;  
     	   	label3 = 8'b11111111;  	   
     	   end
-    	   else if(label3 == 8 & nk > 2) begin
+    	   else if(label3 == 8 & nk > 2 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label3 = 8'b11111111;  	   
     	   end
-    	   else if(label3 == 9 & nk > 2) begin
+    	   else if(label3 == 9 & nk > 2 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label3 = 8'b11111111;   	   
     	   end
     	   //increments the label of 4min without loops
-     	   if(label4 == 0 & nk > 3) begin
+     	   if(label4 == 0 & nk > 3 & rst == 0) begin
     	   	N_label0 = N_label0 + 1;
     	   	label4 = 8'b11111111;
     	   end
-    	   else if(label4 == 1 & nk > 3) begin
+    	   else if(label4 == 1 & nk > 3 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label4 = 8'b11111111;   	   
     	   end
-    	   else if(label4 == 2 & nk > 3) begin
+    	   else if(label4 == 2 & nk > 3 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label4 = 8'b11111111;  	   
     	   end
-    	   else if(label4 == 3 & nk > 3) begin
+    	   else if(label4 == 3 & nk > 3 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label4 = 8'b11111111;	   
     	   end
-    	   else if(label4 == 4 & nk > 3) begin
+    	   else if(label4 == 4 & nk > 3 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label4 = 8'b11111111; 	   
     	   end
-    	   else if(label4 == 5 & nk > 3) begin
+    	   else if(label4 == 5 & nk > 3 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label4 = 8'b11111111;   
     	   end
-    	   else if(label4 == 6 & nk > 3) begin
+    	   else if(label4 == 6 & nk > 3 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label4 = 8'b11111111; 	   
     	   end
-    	   else if(label4 == 7 & nk > 3) begin
+    	   else if(label4 == 7 & nk > 3 & rst == 0) begin
     	   	N_label7 = N_label7 + 1;  
     	   	label4 = 8'b11111111;  	   
     	   end
-    	   else if(label4 == 8 & nk > 3) begin
+    	   else if(label4 == 8 & nk > 3 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label4 = 8'b11111111;  	   
     	   end
-    	   else if(label4 == 9 & nk > 3) begin
+    	   else if(label4 == 9 & nk > 3 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label4 = 8'b11111111;   	   
     	   end
     	   //increments the label of 5min without loops
-     	   if(label5 == 0 & nk > 4) begin
+     	   if(label5 == 0 & nk > 4 & rst == 0) begin
     	   	N_label0 = N_label0 + 1;
     	   	label5 = 8'b11111111;
     	   end
-    	   else if(label5 == 1 & nk > 4) begin
+    	   else if(label5 == 1 & nk > 4 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label5 = 8'b11111111;   	   
     	   end
-    	   else if(label5 == 2 & nk > 4) begin
+    	   else if(label5 == 2 & nk > 4 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label5 = 8'b11111111;  	   
     	   end
-    	   else if(label5 == 3 & nk > 4) begin
+    	   else if(label5 == 3 & nk > 4 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label5 = 8'b11111111;	   
     	   end
-    	   else if(label5 == 4 & nk > 4) begin
+    	   else if(label5 == 4 & nk > 4 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label5 = 8'b11111111; 	   
     	   end
-    	   else if(label5 == 5 & nk > 4) begin
+    	   else if(label5 == 5 & nk > 4 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label5 = 8'b11111111;   
     	   end
-    	   else if(label5 == 6 & nk > 4) begin
+    	   else if(label5 == 6 & nk > 4 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label5 = 8'b11111111; 	   
     	   end
@@ -828,175 +828,175 @@ module knn_core
     	   	N_label7 = N_label7 + 1;  
     	   	label5 = 8'b11111111;  	   
     	   end
-    	   else if(label5 == 8 & nk > 4) begin
+    	   else if(label5 == 8 & nk > 4 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label5 = 8'b11111111;  	   
     	   end
-    	   else if(label5 == 9 & nk > 4) begin
+    	   else if(label5 == 9 & nk > 4 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label5 = 8'b11111111;   	   
     	   end
     	   //increments the label of 6min without loops
-     	   if(label6 == 0 & nk > 5) begin
+     	   if(label6 == 0 & nk > 5 & rst == 0) begin
     	   	N_label0 = N_label0 + 1;
     	   	label6 = 8'b11111111;
     	   end
-    	   else if(label6 == 1 & nk > 5) begin
+    	   else if(label6 == 1 & nk > 5 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label6 = 8'b11111111;   	   
     	   end
-    	   else if(label6 == 2 & nk > 5) begin
+    	   else if(label6 == 2 & nk > 5 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label6 = 8'b11111111;  	   
     	   end
-    	   else if(label6 == 3 & nk > 5) begin
+    	   else if(label6 == 3 & nk > 5 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label6 = 8'b11111111;	   
     	   end
-    	   else if(label6 == 4 & nk > 5) begin
+    	   else if(label6 == 4 & nk > 5 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label6 = 8'b11111111; 	   
     	   end
-    	   else if(label6 == 5 & nk > 5) begin
+    	   else if(label6 == 5 & nk > 5 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label6 = 8'b11111111;   
     	   end
-    	   else if(label6 == 6 & nk > 5) begin
+    	   else if(label6 == 6 & nk > 5 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label6 = 8'b11111111; 	   
     	   end
-    	   else if(label6 == 7 & nk > 5) begin
+    	   else if(label6 == 7 & nk > 5 & rst == 0) begin
     	   	N_label7 = N_label7 + 1;  
     	   	label6 = 8'b11111111;  	   
     	   end
-    	   else if(label6 == 8 & nk > 5) begin
+    	   else if(label6 == 8 & nk > 5 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label6 = 8'b11111111;  	   
     	   end
-    	   else if(label6 == 9 & nk > 5) begin
+    	   else if(label6 == 9 & nk > 5 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label6 = 8'b11111111;   	   
     	   end
     	   //increments the label of 7min without loops
-     	   if(label7 == 0 & nk > 6) begin
+     	   if(label7 == 0 & nk > 6 & rst == 0) begin
     	   	N_label0 = N_label0 + 1;
     	   	label7 = 8'b11111111;
     	   end
-    	   else if(label7 == 1 & nk > 6) begin
+    	   else if(label7 == 1 & nk > 6 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label7 = 8'b11111111;   	   
     	   end
-    	   else if(label7 == 2 & nk > 6) begin
+    	   else if(label7 == 2 & nk > 6 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label7 = 8'b11111111;  	   
     	   end
-    	   else if(label7 == 3 & nk > 6) begin
+    	   else if(label7 == 3 & nk > 6 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label7 = 8'b11111111;	   
     	   end
-    	   else if(label7 == 4 & nk > 6) begin
+    	   else if(label7 == 4 & nk > 6 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label7 = 8'b11111111; 	   
     	   end
-    	   else if(label7 == 5 & nk > 6) begin
+    	   else if(label7 == 5 & nk > 6 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label7 = 8'b11111111;   
     	   end
-    	   else if(label7 == 6 & nk > 6) begin
+    	   else if(label7 == 6 & nk > 6 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label7 = 8'b11111111; 	   
     	   end
-    	   else if(label7 == 7 & nk > 6) begin
+    	   else if(label7 == 7 & nk > 6 & rst == 0) begin
     	   	N_label7 = N_label7 + 1;  
     	   	label7 = 8'b11111111;  	   
     	   end
-    	   else if(label7 == 8 & nk < Plabel8) begin
+    	   else if(label7 == 8 & nk < Plabel8 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label7 = 8'b11111111;  	   
     	   end
-    	   else if(label7 == 9 & nk > 6) begin
+    	   else if(label7 == 9 & nk > 6 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label7 = 8'b11111111;   	   
     	   end
     	   //increments the label of 8min without loops
-     	   if(label8 == 0 & nk > 7) begin
+     	   if(label8 == 0 & nk > 7 & rst == 0) begin
     	   	N_label0 = N_label0 + 1;
     	   	label8 = 8'b11111111;
     	   end
-    	   else if(label8 == 1 & nk > 7) begin
+    	   else if(label8 == 1 & nk > 7 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label8 = 8'b11111111;   	   
     	   end
-    	   else if(label8 == 2 & nk > 7) begin
+    	   else if(label8 == 2 & nk > 7 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label8 = 8'b11111111;  	   
     	   end
-    	   else if(label8 == 3 & nk > 7) begin
+    	   else if(label8 == 3 & nk > 7 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label8 = 8'b11111111;	   
     	   end
-    	   else if(label8 == 4 & nk > 7) begin
+    	   else if(label8 == 4 & nk > 7 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label8 = 8'b11111111; 	   
     	   end
-    	   else if(label8 == 5 & nk > 7) begin
+    	   else if(label8 == 5 & nk > 7 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label8 = 8'b11111111;   
     	   end
-    	   else if(label8 == 6 & nk < Plabel6) begin
+    	   else if(label8 == 6 & nk < 7 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label8 = 8'b11111111; 	   
     	   end
-    	   else if(label8 == 7 & nk > 7) begin
+    	   else if(label8 == 7 & nk > 7 & rst == 0) begin
     	   	N_label7 = N_label7 + 1;  
     	   	label8 = 8'b11111111;  	   
     	   end
-    	   else if(label8 == 8 & nk > 7) begin
+    	   else if(label8 == 8 & nk > 7 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label8 = 8'b11111111;  	   
     	   end
-    	   else if(label8 == 9 & nk > 7) begin
+    	   else if(label8 == 9 & nk > 7 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label8 = 8'b11111111;   	   
     	   end
     	   //increments the label of 9min without loops
-     	   if(label9 == 0 & nk > 8) begin
+     	   if(label9 == 0 & nk > 8 & rst == 0) begin
     	   	N_label0 = N_label0 + 1;
     	   	label9 = 8'b11111111;
     	   end
-    	   else if(label9 == 1 & nk > 8) begin
+    	   else if(label9 == 1 & nk > 8 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label9 = 8'b11111111;   	   
     	   end
-    	   else if(label9 == 2 & nk > 8) begin
+    	   else if(label9 == 2 & nk > 8 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label9 = 8'b11111111;  	   
     	   end
-    	   else if(label9 == 3 & nk > 8) begin
+    	   else if(label9 == 3 & nk > 8 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label9 = 8'b11111111;	   
     	   end
-    	   else if(label9 == 4 & nk > 8) begin
+    	   else if(label9 == 4 & nk > 8 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label9 = 8'b11111111; 	   
     	   end
-    	   else if(label9 == 5 & nk > 8) begin
+    	   else if(label9 == 5 & nk > 8 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label9 = 8'b11111111;   
     	   end
-    	   else if(label9 == 6 & nk > 8) begin
+    	   else if(label9 == 6 & nk > 8 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label9 = 8'b11111111; 	   
     	   end
-    	   else if(label9 == 7 & nk > 8) begin
+    	   else if(label9 == 7 & nk > 8 & rst == 0) begin
     	   	N_label7 = N_label7 + 1;  
     	   	label9 = 8'b11111111;  	   
     	   end
-    	   else if(label9 == 8 & nk > 8) begin
+    	   else if(label9 == 8 & nk > 8 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label9 = 8'b11111111;  	   
     	   end
-    	   else if(label9 == 9 & nk > 8) begin
+    	   else if(label9 == 9 & nk > 8 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label9 = 8'b11111111;   	   
     	   end
@@ -1005,72 +1005,72 @@ module knn_core
     	   	N_label0 = N_label0 + 1;
     	   	label10 = 8'b11111111;
     	   end
-    	   else if(label10 == 1 & nk > 9) begin
+    	   else if(label10 == 1 & nk > 9 & rst == 0) begin
     	   	N_label1 = N_label1 + 1; 
     	   	label10 = 8'b11111111;   	   
     	   end
-    	   else if(label10 == 2 & nk > 9) begin
+    	   else if(label10 == 2 & nk > 9 & rst == 0) begin
     	   	N_label2 = N_label2 + 1;  
     	   	label10 = 8'b11111111;  	   
     	   end
-    	   else if(label10 == 3 & nk > 9) begin
+    	   else if(label10 == 3 & nk > 9 & rst == 0) begin
     	   	N_label3 = N_label3 + 1;    
     	   	label10 = 8'b11111111;	   
     	   end
-    	   else if(label10 == 4 & nk > 9) begin
+    	   else if(label10 == 4 & nk > 9 & rst == 0) begin
     	   	N_label4 = N_label4 + 1;  
     	   	label10 = 8'b11111111; 	   
     	   end
-    	   else if(label10 == 5 & nk > 9) begin
+    	   else if(label10 == 5 & nk > 9 & rst == 0) begin
     	   	N_label5 = N_label5 + 1;    	
     	   	label10 = 8'b11111111;   
     	   end
-    	   else if(label10 == 6 & nk > 9) begin
+    	   else if(label10 == 6 & nk > 9 & rst == 0) begin
     	   	N_label6 = N_label6 + 1;   
     	   	label10 = 8'b11111111; 	   
     	   end
-    	   else if(label10 == 7 & nk > 9) begin
+    	   else if(label10 == 7 & nk > 9 & rst == 0) begin
     	   	N_label7 = N_label7 + 1;  
     	   	label10 = 8'b11111111;  	   
     	   end
-    	   else if(label10 == 8 & nk > 9) begin
+    	   else if(label10 == 8 & nk > 9 & rst == 0) begin
     	   	N_label8 = N_label8 + 1;  
     	   	label10 = 8'b11111111;  	   
     	   end
-    	   else if(label10 == 9 & nk > 9) begin
+    	   else if(label10 == 9 & nk > 9 & rst == 0) begin
     	   	N_label9 = N_label9 + 1; 
     	   	label10 = 8'b11111111;   	   
     	   end
     	   
     	   //compares N_labels to find point label no loops
-    	   if(N_label0 >= N_label1 & N_label0 >= N_label2 & N_label0 >= N_label3 & N_label0 >= N_label4 & N_label0 >= N_label5 & N_label0 >= N_label6 & N_label0 >= N_label7 & N_label0 >= N_label8 & N_label0 >= N_label9) begin
+    	   if(N_label0 >= N_label1 & N_label0 >= N_label2 & N_label0 >= N_label3 & N_label0 >= N_label4 & N_label0 >= N_label5 & N_label0 >= N_label6 & N_label0 >= N_label7 & N_label0 >= N_label8 & N_label0 >= N_label9 & rst == 0) begin
     	     labelOUTaux <= Plabel0;
     	   end
-    	   else if(N_label1 >= N_label0 & N_label1 >= N_label2 & N_label1 >= N_label3 & N_label1 >= N_label4 & N_label1 >= N_label5 & N_label1 >= N_label6 & N_label1 >= N_label7 & N_label1 >= N_label8 & N_label1 >= N_label9) begin
+    	   else if(N_label1 >= N_label0 & N_label1 >= N_label2 & N_label1 >= N_label3 & N_label1 >= N_label4 & N_label1 >= N_label5 & N_label1 >= N_label6 & N_label1 >= N_label7 & N_label1 >= N_label8 & N_label1 >= N_label9 & rst == 0) begin
     	     labelOUTaux <= Plabel1;
     	   end
-    	   else if(N_label2 >= N_label0 & N_label2 >= N_label1 & N_label2 >= N_label3 & N_label2 >= N_label4 & N_label2 >= N_label5 & N_label2 >= N_label6 & N_label2 >= N_label7 & N_label2 >= N_label8 & N_label2 >= N_label9) begin
+    	   else if(N_label2 >= N_label0 & N_label2 >= N_label1 & N_label2 >= N_label3 & N_label2 >= N_label4 & N_label2 >= N_label5 & N_label2 >= N_label6 & N_label2 >= N_label7 & N_label2 >= N_label8 & N_label2 >= N_label9 & rst == 0) begin
     	     labelOUTaux <= Plabel2;
     	   end
-    	   else if(N_label3 >= N_label0 & N_label3 >= N_label1 & N_label3 >= N_label2 & N_label3 >= N_label4 & N_label3 >= N_label5 & N_label3 >= N_label6 & N_label3 >= N_label7 & N_label3 >= N_label8 & N_label3 >= N_label9) begin
+    	   else if(N_label3 >= N_label0 & N_label3 >= N_label1 & N_label3 >= N_label2 & N_label3 >= N_label4 & N_label3 >= N_label5 & N_label3 >= N_label6 & N_label3 >= N_label7 & N_label3 >= N_label8 & N_label3 >= N_label9 & rst == 0) begin
     	     labelOUTaux <= Plabel3;
     	   end
-    	   else if(N_label4 >= N_label0 & N_label4 >= N_label1 & N_label4 >= N_label2 & N_label4 >= N_label3 & N_label4 >= N_label5 & N_label4 >= N_label6 & N_label4 >= N_label7 & N_label4 >= N_label8 & N_label4 >= N_label9) begin
+    	   else if(N_label4 >= N_label0 & N_label4 >= N_label1 & N_label4 >= N_label2 & N_label4 >= N_label3 & N_label4 >= N_label5 & N_label4 >= N_label6 & N_label4 >= N_label7 & N_label4 >= N_label8 & N_label4 >= N_label9 & rst == 0) begin
     	     labelOUTaux <= Plabel4;
     	   end
-    	   else if(N_label5 >= N_label0 & N_label5 >= N_label1 & N_label5 >= N_label2 & N_label5 >= N_label3 & N_label5 >= N_label4 & N_label5 >= N_label6 & N_label5 >= N_label7 & N_label5 >= N_label8 & N_label5 >= N_label9) begin
+    	   else if(N_label5 >= N_label0 & N_label5 >= N_label1 & N_label5 >= N_label2 & N_label5 >= N_label3 & N_label5 >= N_label4 & N_label5 >= N_label6 & N_label5 >= N_label7 & N_label5 >= N_label8 & N_label5 >= N_label9 & rst == 0) begin
     	     labelOUTaux <= Plabel5;
     	   end
-    	   else if(N_label6 >= N_label0 & N_label6 >= N_label1 & N_label6 >= N_label2 & N_label6 >= N_label3 & N_label6 >= N_label4 & N_label6 >= N_label5 & N_label6 >= N_label7 & N_label6 >= N_label8 & N_label6 >= N_label9) begin
+    	   else if(N_label6 >= N_label0 & N_label6 >= N_label1 & N_label6 >= N_label2 & N_label6 >= N_label3 & N_label6 >= N_label4 & N_label6 >= N_label5 & N_label6 >= N_label7 & N_label6 >= N_label8 & N_label6 >= N_label9 & rst == 0) begin
     	     labelOUTaux <= Plabel6;
     	   end
-    	   else if(N_label7 >= N_label0 & N_label7 >= N_label1 & N_label7 >= N_label2 & N_label7 >= N_label3 & N_label7 >= N_label4 & N_label7 >= N_label5 & N_label7 >= N_label6 & N_label7 >= N_label8 & N_label7 >= N_label9) begin
+    	   else if(N_label7 >= N_label0 & N_label7 >= N_label1 & N_label7 >= N_label2 & N_label7 >= N_label3 & N_label7 >= N_label4 & N_label7 >= N_label5 & N_label7 >= N_label6 & N_label7 >= N_label8 & N_label7 >= N_label9 & rst == 0) begin
     	     labelOUTaux <= Plabel7;
     	   end
-    	   else if(N_label8 >= N_label0 & N_label8 >= N_label1 & N_label8 >= N_label2 & N_label8 >= N_label3 & N_label8 >= N_label4 & N_label8 >= N_label5 & N_label8 >= N_label6 & N_label8 >= N_label7 & N_label8 >= N_label9) begin
+    	   else if(N_label8 >= N_label0 & N_label8 >= N_label1 & N_label8 >= N_label2 & N_label8 >= N_label3 & N_label8 >= N_label4 & N_label8 >= N_label5 & N_label8 >= N_label6 & N_label8 >= N_label7 & N_label8 >= N_label9 & rst == 0) begin
     	     labelOUTaux <= Plabel8;
     	   end
-    	   else if(N_label9 >= N_label0 & N_label9 >= N_label1 & N_label9 >= N_label2 & N_label9 >= N_label3 & N_label9 >= N_label4 & N_label9 >= N_label5 & N_label9 >= N_label6 & N_label9 >= N_label7 & N_label9 >= N_label8) begin
+    	   else if(N_label9 >= N_label0 & N_label9 >= N_label1 & N_label9 >= N_label2 & N_label9 >= N_label3 & N_label9 >= N_label4 & N_label9 >= N_label5 & N_label9 >= N_label6 & N_label9 >= N_label7 & N_label9 >= N_label8 & rst == 0) begin
     	     labelOUTaux <= Plabel9;
     	   end
     	end
@@ -1078,4 +1078,3 @@ module knn_core
     `SIGNAL2OUT(Xlabel,labelOUTaux)
     
 endmodule
-
