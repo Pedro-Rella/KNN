@@ -102,7 +102,9 @@ module knn_core
     
     `SIGNAL_SIGNED(labelOUTaux, 8)
     
-    always @* begin
+    
+    always @ (rst)
+    begin
     	if(rst) begin
           en1=0;
           en2=0;
@@ -114,16 +116,16 @@ module knn_core
           en8=0;
           en9=0;
           en10=0;
-          N_label0=0;
-          N_label1=0;
-          N_label2=0;
-          N_label3=0;
-          N_label4=0;
-          N_label5=0;
-          N_label6=0;
-          N_label7=0;
-          N_label8=0;
-          N_label9=0;
+          N_label0<=0;
+          N_label1<=0;
+          N_label2<=0;
+          N_label3<=0;
+          N_label4<=0;
+          N_label5<=0;
+          N_label6<=0;
+          N_label7<=0;
+          N_label8<=0;
+          N_label9<=0;
           Plabel0=0;
           Plabel1=1;
           Plabel2=2;
@@ -134,9 +136,23 @@ module knn_core
           Plabel7=7;
           Plabel8=8;
           Plabel9=9;
-          labelOUTaux=-1;
+          labelOUTaux<=-1;
+    	end
+    	else begin
+    	  N_label0<=N_label0;
+          N_label1<=N_label1;
+          N_label2<=N_label2;
+          N_label3<=N_label3;
+          N_label4<=N_label4;
+          N_label5<=N_label5;
+          N_label6<=N_label6;
+          N_label7<=N_label7;
+          N_label8<=N_label8;
+          N_label9<=N_label9;
+          labelOUTaux<=labelOUTaux;
     	end
     end
+    
     
     //1
     `REG_ARE(clk,rst, 32'b01111111111111111111111111111111, en1, min1, d_aux)
