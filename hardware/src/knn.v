@@ -125,18 +125,32 @@ module knn_core
     
     `SIGNAL_SIGNED(labelOUTaux, 8)
     
-     `REG_ARE(clk,rst, 1'b0, 0, N_label0, N_label0_aux)
-     `REG_ARE(clk,rst, 1'b0, 0, N_label1, N_label1_aux)
-     `REG_ARE(clk,rst, 1'b0, 0, N_label2, N_label2_aux)
-     `REG_ARE(clk,rst, 1'b0, 0, N_label3, N_label3_aux)
-     `REG_ARE(clk,rst, 1'b0, 0, N_label4, N_label4_aux)
-     `REG_ARE(clk,rst, 1'b0, 0, N_label5, N_label5_aux)
-     `REG_ARE(clk,rst, 1'b0, 0, N_label6, N_label6_aux)
-     `REG_ARE(clk,rst, 1'b0, 0, N_label7, N_label7_aux)
-     `REG_ARE(clk,rst, 1'b0, 0, N_label8, N_label8_aux)
-     `REG_ARE(clk,rst, 1'b0, 0, N_label9, N_label9_aux)
-     `REG_ARE(clk,rst, 4'b1111, 0, labelOUTaux, labelOUTaux_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label0, N_label0_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label1, N_label1_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label2, N_label2_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label3, N_label3_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label4, N_label4_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label5, N_label5_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label6, N_label6_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label7, N_label7_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label8, N_label8_aux)
+     `REG_ARE(clk,rst, 1'b0, 1, N_label9, N_label9_aux)
+     `REG_ARE(clk,rst, 4'b1111, 1, labelOUTaux, labelOUTaux_aux)
     
+    always @*
+    begin
+      N_label0_aux <= N_label0;
+      N_label1_aux <= N_label1;
+      N_label2_aux <= N_label2;
+      N_label3_aux <= N_label3;
+      N_label4_aux <= N_label4;
+      N_label5_aux <= N_label5;
+      N_label6_aux <= N_label6;
+      N_label7_aux <= N_label7;
+      N_label8_aux <= N_label8;
+      N_label9_aux <= N_label9;
+      labelOUTaux_aux <= labelOUTaux;
+    end
     
     always @ (posedge rst)
     begin
