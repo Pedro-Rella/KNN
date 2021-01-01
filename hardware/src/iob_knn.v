@@ -20,6 +20,7 @@ module iob_knn
 
     `SIGNAL(KNN_RESET, 1)
     `SIGNAL(CONTROL_BITS, 3)
+    `SIGNAL(Xlabel_aux, 8)
 
     //combined hard/soft reset 
    `SIGNAL(rst_int, 1)
@@ -44,7 +45,7 @@ module iob_knn
       .data_y(DATA_Y),
       .data_label(DATA_LABEL),
       .control(CONTROL_BITS),
-      .Xlabel(XLABEL)
+      .Xlabel(Xlabel_aux)
       );   
    
    //ready signal   
@@ -55,7 +56,8 @@ module iob_knn
 
    `COMB begin
       CONTROL_BITS = CONTROL[3:1];
-      KNN_RESET = CONTROL[0:0];  
+      KNN_RESET = CONTROL[0:0];
+      XLABEL = {24'b000000000000000000000000, Xlabel_aux};
    end
       
 endmodule
