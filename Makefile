@@ -46,7 +46,9 @@ endif
 #
 
 doc:
-	make -C document/$(DOC_TYPE) $(DOC_TYPE).pdf
+	for i in 1 2; do\
+		make -C document/$(DOC_TYPE) $(DOC_TYPE).pdf;\
+	done
 
 doc-clean:
 	make -C document/$(DOC_TYPE) clean

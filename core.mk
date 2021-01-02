@@ -1,6 +1,7 @@
 CORE_NAME:=KNN
 IS_CORE:=1
 USE_NETLIST ?=0
+VERSION:=0.1
 
 #PATHS
 KNN_HW_DIR:=$(KNN_DIR)/hardware
@@ -54,8 +55,8 @@ endif
 #
 #DOCUMENT
 #
-DOC_TYPE:=pb
-#DOC_TYPE:=ug
+#DOC_TYPE:=pb
+DOC_TYPE:=ug
 INTEL ?=0
 XILINX ?=1
 

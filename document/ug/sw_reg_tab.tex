@@ -1,0 +1,12 @@
+NK & W & 0x00 & 7:0 & 0 & number of neighbors \\ \hline
+\rowcolor{iob-blue}
+XX & W & 0x04 & WDATA\_W-1:0 & 0 & x coordenate for point being studied \\ \hline
+YY & W & 0x08 & WDATA\_W-1:0 & 0 & y coordenate for point being studied \\ \hline
+\rowcolor{iob-blue}
+DATA\_X & W & 0x0c & WDATA\_W-1:0 & 0 & x coordenate for data point \\ \hline
+DATA\_Y & W & 0x10 & WDATA\_W-1:0 & 0 & y coordenate for data point \\ \hline
+\rowcolor{iob-blue}
+DATA\_LABEL & W & 0x14 & 7:0 & 0 & data label \\ \hline
+CONTROL & W & 0x18 & 3:0 & 0 & KNN reset and control (LSB reset the others control) \\ \hline
+\rowcolor{iob-blue}
+XLABEL & R & 0x1c & 31:0 & 0 & label of the studied point \\ \hline
